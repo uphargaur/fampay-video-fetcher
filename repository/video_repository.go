@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"FamPay-uphar/models"
 	"context"
-	"fampay_backend_assignment/models"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

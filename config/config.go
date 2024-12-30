@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Load environment variables
+// LoadEnv loads environment variables
 func LoadEnv() {
 	err := godotenv.Load()
 	if err != nil {
@@ -20,12 +20,12 @@ func LoadEnv() {
 	}
 }
 
-// Get MongoDB URI
+// GetMongoURI retrieves the MongoDB Atlas connection URI
 func GetMongoURI() string {
 	return os.Getenv("MONGODB_URI")
 }
 
-// Connect to MongoDB
+// ConnectDB connects to the MongoDB Atlas instance
 func ConnectDB() (*mongo.Database, error) {
 	clientOptions := options.Client().ApplyURI(GetMongoURI())
 	client, err := mongo.NewClient(clientOptions)
@@ -41,19 +41,28 @@ func ConnectDB() (*mongo.Database, error) {
 		return nil, err
 	}
 
+	// Ping MongoDB to verify the connection
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	log.Println("Successfully connected to MongoDB Atlas")
 	return client.Database("fampay"), nil
 }
 
-// Get YouTube API keys
-func GetAPIKeys() []string {
-	return strings.Split(os.Getenv("YOUTUBE_API_KEYS"), ",")
-}
-
-// Get application port
 func GetPort() string {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 	return port
+}
+
+func GetAPIKeys() []string {
+	apiKeys := os.Getenv("YOUTUBE_API_KEYS")
+	if apiKeys == "" {
+		return []string{} // Return an empty slice if no keys are provided
+	}
+	return strings.Split(apiKeys, ",")
 }

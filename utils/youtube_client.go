@@ -20,7 +20,7 @@ type VideoData struct {
 func FetchYouTubeVideos(apiKey, query string, publishedAfter time.Time) ([]VideoData, error) {
 	url := fmt.Sprintf("%s?part=snippet&type=video&order=date&q=%s&publishedAfter=%s&key=%s",
 		youtubeAPIURL, query, publishedAfter.Format(time.RFC3339), apiKey)
-
+	fmt.Println("Constructed YouTube API URL:", url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
