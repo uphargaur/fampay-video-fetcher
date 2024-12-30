@@ -13,5 +13,6 @@ func InitializeRoutes(router *gin.Engine, db *mongo.Database) {
 	api := router.Group("/api")
 	{
 		api.GET("/videos", controllers.GetPaginatedVideos(videoRepo))
+		api.GET("/search", controllers.SearchVideos(videoRepo))
 	}
 }
