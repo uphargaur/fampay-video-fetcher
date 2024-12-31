@@ -1,32 +1,12 @@
-# Use the official Golang image as a builder
-FROM golang:1.20 AS builder
+FROM golang:1.23
 
-# Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy Go modules manifests first (to leverage Docker caching)
+# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
 COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 
-# Download dependencies
-RUN go mod tidy
-
-# Copy the rest of the application's source code
 COPY . .
+RUN go build -v -o /usr/local/bin/app ./cmd/main.go
 
-# Build the Go application
-RUN go build -o app ./cmd/main.go
-
-# Use a minimal image for the final output
-FROM debian:bullseye-slim
-
-# Set working directory inside the container
-WORKDIR /app
-
-# Copy the built binary from the builder stage
-COPY --from=builder /app/app .
-
-# Expose the port the app runs on (replace 8080 with your application's port if different)
-EXPOSE 8080
-
-# Run the application
-CMD ["./app"]
+CMD ["app"]
