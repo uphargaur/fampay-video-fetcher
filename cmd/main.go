@@ -6,10 +6,10 @@ import (
 	"FamPay-uphar/routes"
 	"FamPay-uphar/services"
 	"context"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"log"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -24,7 +24,14 @@ func main() {
 
 	// Start Gin server
 	router := gin.Default()
-
+	// CORS configuration
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:4200"},                   // Allow requests from your Angular app
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, // Allowed methods
+		AllowHeaders:     []string{"Content-Type", "Authorization"},           // Allowed headers
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 	// Repository and service setup
 	videoRepo := repository.NewVideoRepository(db)
 	apiKeys := config.GetAPIKeys()

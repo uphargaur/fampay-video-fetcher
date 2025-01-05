@@ -30,7 +30,7 @@ A RESTful API service that fetches data from YouTube APIs and stores them in a d
     - Watch a comprehensive walkthrough of the application
     - Learn about the features and implementation details
 
-- **Frontend Repository**: Coming Soon
+- **Frontend Repository**: [GitHub Repo](https://github.com/uphargaur/Video-dashboard)
     - Angular-based frontend codebase
     - User interface for video browsing and searching
     - Modern, responsive design implementation
@@ -110,13 +110,15 @@ The frontend application is being developed using Angular and will feature:
 1. **Modern UI/UX**:
     - Responsive design
     - Material Design components
-    - Dark/Light theme support
 
+**Pagination Demo**
+
+![img.png](img.png)
     
-2. **Deployment**:
-    - Hosted on Vercel
-    - Automated deployment pipeline
-    - Production optimization
+
+**Search Demo**
+
+![img_1.png](img_1.png)
 
 
 ## System Design
